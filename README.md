@@ -47,7 +47,7 @@ cd sim
 mkdir build
 cd build
 cmake ..
-make -j 4
+make
 ```
 
 ### Running the code:
