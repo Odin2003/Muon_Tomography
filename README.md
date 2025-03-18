@@ -26,6 +26,12 @@ docker run -it --rm -h dreamsim -v /path/to/DREAMSIM:/DREAMSIM yongbinfeng/alma9
 ```
 **Note** if you have conda installed, exit the conda environment before running the singularity container, otherwise it might cause conflicts with different ROOT versions etc.
 
+If you are on **lxplus**, use CERN's lcg:
+
+```
+source /cvmfs/sft.cern.ch/lcg/views/LCG_107/x86_64-el9-gcc11-opt/setup.sh
+```
+
 ## Running the Simulation
 
 ### Structure of software:
