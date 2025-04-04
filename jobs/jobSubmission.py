@@ -10,9 +10,16 @@ submissiontext = """#!/bin/bash
 singularity_cmd = "singularity run --cleanenv --bind /lustre:/lustre /lustre/work/yofeng/SimulationEnv/alma9forgeant4_sbox/"
 #run_cmd = "BUILDDIR/exampleB4b -b BUILDDIR/paramBatch03_single.mac      -jobName JOBNAME -runNumber RUNNUM -runSeq RUNSEQ      -numberOfEvents NEVENTS  -eventsInNtupe NEVENTS -gun_particle PARTICLE -gun_energy_min ENERGY_MIN -gun_energy_max ENERGY_MAX     -sipmType 1"
 
-run_cmd = "BUILDDIR/exampleB4a -b BUILDDIR/batch_run_C3RAA_01.mac       -runNumber RUNNUM -runSeq RUNSEQ    -numberOfEvents NEVENTS -dataDIR /home/odschnei/MuonX/g4sim/ICSIMtest/icsim_03_01b/odin_test_sim/data"
-#run_cmd = "BUILDDIR/exampleB4a -b BUILDDIR/batch_run_C0RRR_01.mac       -runNumber RUNNUM -runSeq RUNSEQ    -numberOfEvents NEVENTS -dataDIR /home/odschnei/MuonX/g4sim/ICSIMtest/icsim_03_01b/odin_test_sim/data"
+# C0 Runs
+#run_cmd = "BUILDDIR/exampleB4a -b BUILDDIR/batch_run_C0RAA_01.mac       -runNumber RUNNUM -runSeq RUNSEQ    -numberOfEvents NEVENTS -dataDIR /home/odschnei/MuonX/g4sim/ICSIMtest/icsim_03_01b/sim/data"
+#run_cmd = "BUILDDIR/exampleB4a -b BUILDDIR/batch_run_C0RRR_01.mac       -runNumber RUNNUM -runSeq RUNSEQ    -numberOfEvents NEVENTS -dataDIR /home/odschnei/MuonX/g4sim/ICSIMtest/icsim_03_01b/sim/data"
 
+# C3 Runs
+#run_cmd = "BUILDDIR/exampleB4a -b BUILDDIR/batch_run_C3RAA_01.mac       -runNumber RUNNUM -runSeq RUNSEQ    -numberOfEvents NEVENTS -dataDIR /home/odschnei/MuonX/g4sim/ICSIMtest/icsim_03_01b/sim/data"
+run_cmd = "BUILDDIR/exampleB4a -b BUILDDIR/batch_run_C3RRR_01.mac       -runNumber RUNNUM -runSeq RUNSEQ    -numberOfEvents NEVENTS -dataDIR /home/odschnei/MuonX/g4sim/ICSIMtest/icsim_03_01b/sim/data"
+
+# Full Air run
+#run_cmd = "BUILDDIR/exampleB4a -b BUILDDIR/batch_run_C0AAA_01.mac       -runNumber RUNNUM -runSeq RUNSEQ    -numberOfEvents NEVENTS -dataDIR /home/odschnei/MuonX/g4sim/ICSIMtest/icsim_03_01b/sim/data"
 
 
 import os
@@ -23,11 +30,11 @@ print("Current directory: ", current_dir)
 #
 # change from here
 #
-sim_build_dir = f"{current_dir}/../odin_test_sim/build"
+sim_build_dir = f"{current_dir}/../sim/build"
 log_dir = f"{current_dir}/log"
 njobs = 1000
-nevents_per_job = 20000
-runnumber = 103
+nevents_per_job = 1000000
+runnumber = 133
 jobname_prefix = "tomographysim" 
 
 if not os.path.exists(log_dir):
@@ -54,7 +61,7 @@ for i in range(njobs):
     with open(fname, "w") as f:
         f.write(submissiontext_tmp)
         f.write("\n\n")
-        f.write("cd /home/odschnei/MuonX/g4sim/ICSIMtest/icsim_03_01b/odin_test_sim/build")
+        f.write("cd "+sim_build_dir)
         f.write("\n\n")
         f.write(singularity_cmd)
         f.write(" <<EOF")

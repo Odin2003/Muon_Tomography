@@ -21,6 +21,9 @@
 #include "TEllipse.h"
 #include "TText.h"
 #include "TPaveText.h"
+#include <sys/stat.h>
+#include <sys/types.h>
+
 
 #include "SC8DataStruc.h"
 
@@ -44,21 +47,35 @@ MuonTree::MuonTree(string macFileName,int argc,char** argv)
      setParam(a.substr(1,a.size()-1), b);
   }
 
-   runConfig=getParamS("runConfig");
-   runNumber=getParamI("runNumber");
+  runConfig = getParamS("runConfig");
+  runNumber = getParamI("runNumber");
 
-   string outname=getParamS("jobName")+"_run"
-                 +getParamS("runNumber")+"_"
-                 +getParamS("runSeq")+"_"
-                 +getParamS("runConfig")+"_"
-                 +getParamS("numberOfEvents");
-   string outRootName=getParamS("rootPre")+"_"+outname+".root";
-   string outMuonListName=getParamS("MuonListPre")+"_"+outname+".txt";
+  // Define the directory name
+  string outDir = runConfig + "_Rootfiles";
 
-   eventCounts=0;
-   eventCountsALL=0;
+  // Check if the directory exists, if not, create it
+  struct stat info;
+  if (stat(outDir.c_str(), &info) != 0) {
+	  // Directory does not exist, create it
+	  if (mkdir(outDir.c_str(), 0777) != 0) {
+		  cerr << "Error creating directory: " << outDir << endl;
+	  }
+  }
 
-   createMuonList=false;
+  // Construct file names inside the new directory
+  string outname = getParamS("jobName")+"_run"
+	  +getParamS("runNumber")+"_"
+	  +getParamS("runSeq")+"_"
+	  +getParamS("runConfig")+"_"
+	  +getParamS("numberOfEvents");
+
+  string outRootName = outDir + "/" + getParamS("rootPre") + "_" + outname + ".root";
+  string outMuonListName = outDir + "/" + getParamS("MuonListPre") + "_" + outname + ".txt";
+
+  eventCounts=0;
+  eventCountsALL=0;
+
+  createMuonList=false;
    if(getParamS("createMuonList").compare(0,4,"true")==0) {
        createMuonList=true;
        // muonListFile.open(getParamS("MuonListFile"));
@@ -118,7 +135,7 @@ MuonTree::MuonTree(string macFileName,int argc,char** argv)
    histo1D["ProjZ1"]=new TH1D("ProjZ1","Muon- Projected Z x=[-6,-2] (in m at Y=0)",300,-10.0 ,20.0);
    histo1D["ProjZ2"]=new TH1D("ProjZ2","Muon- Projected Z x=[-2,+2](in m at Y=0)",250,-5.0 ,20.0);
    histo1D["ProjZ3"]=new TH1D("ProjZ3","Muon- Projected Z x=[+2,+4](in m at Y=0)",250,-5.0 ,20.0);
-   histo2D["ProjXZ"]=new TH2D("ProjXZ","Muon- Projected X-Z (in m at Y=0)",20,-10.,10.,16,0.0,8.);
+   histo2D["ProjXZ"]=new TH2D("ProjXZ","Muon- Projected X-Z (in m at Y=0)",20,-10.,10.,20,-2.0,8.);
    
    // define root tree...
    tree=new TTree("tree","Cosmic Muon Tree");
