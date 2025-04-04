@@ -81,7 +81,7 @@ To submit large amounts of events, use jobSumission.py in the "jobs" directory. 
 python jobSubmission.py
 ```
 
-(Make sure to change directory locations in jobSubmission.py to your build directory) and 
+and 
 
 ```
 source submit_all.sh
@@ -89,8 +89,11 @@ source submit_all.sh
 
 to submit the jobs. Submission, error and output files are kept in the log directory that will be created when running jobSubmission.py.
 
-Output of root files for analysis is in the build directory. 
+Output of root files for analysis is in the build directory. For example, if you used run_cmd with C0RAA, the files will be in 
 
+```
+sim/build/C0RAA_Rootfiles/
+```
 
 ## Visualization
 
