@@ -14,7 +14,7 @@ From there run the singularity container with the following command:
 ```
 singularity run --cleanenv --bind /lustre:/lustre /lustre/work/yofeng/SimulationEnv/alma9forgeant4_sbox/
 ```
-The corresponding docker image can be found [here](https://hub.docker.com/repository/docker/yongbinfeng/alma9geant/general), with the build file [here](https://github.com/TTU-HEP/SimulationEnv).
+The corresponding docker image can be found [here](https://hub.docker.com/repository/docker/yongbinfeng/alma9geant/general), with the build file [here](https://github.com/TTU-HEP/SimulationEnv). Note the singularity will only work within the working node.
 
 **If running with Docker** on your local machine, firstly pull the docker image
 ```
